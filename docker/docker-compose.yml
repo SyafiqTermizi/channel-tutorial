@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+
+  ticktalk_redis:
+    image: redis:5.0.3-alpine
+
+  ticktalk_db:
+    image: postgres:10.1-alpine
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - 5400:5432
+
+  ticktalk_app:
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+    image: ticktalk
+    depends_on:
+      - ticktalk_db
+      - ticktalk_redis
+    volumes:
+      - ..:/app
+    env_file:
+      - ../.env
+    environment:
+      - REDIS_HOST=ticktalk_redis
+    ports:
+      - "8000:80"
+    command: /start

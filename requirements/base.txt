@@ -1,0 +1,5 @@
+channels==2.1.6
+channels-redis==2.3.3
+Django==2.1.5
+psycopg2==2.7.6.1
+pytz==2018.9

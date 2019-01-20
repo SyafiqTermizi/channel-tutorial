@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-md-center mt-5">
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="room-name">What chat room would you like to enter?</label>
+                    <input placeholder="Room name" name="room-name" class="form-control" id="room-name-input" type="text" size="100"/>
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-primary" id="room-name-submit" type="button" value="Enter"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.querySelector('#room-name-input').focus();
+    document.querySelector('#room-name-input').onkeyup = function(e) {
+        if (e.keyCode === 13) {  // enter, return
+            document.querySelector('#room-name-submit').click();
+        }
+    };
+
+    document.querySelector('#room-name-submit').onclick = function(e) {
+        var roomName = document.querySelector('#room-name-input').value;
+        window.location.pathname = '/chat/' + roomName + '/';
+    };
+</script>
+{% endblock %}
